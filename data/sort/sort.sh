@@ -1,0 +1,1 @@
+python src/sortphotos.py --copy --recursive --sort %Y-%m --rename %Y_%m_%d_%H_%M ../in/2020 ../out

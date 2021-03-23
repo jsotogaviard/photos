@@ -1,0 +1,63 @@
+ui/.DS_Store
+ui/node_modules
+ui/dist
+
+
+# local env files
+ui/.env.local
+ui/.env.*.local
+
+# Log files
+ui/npm-debug.log*
+ui/yarn-debug.log*
+ui/yarn-error.log*
+ui/pnpm-debug.log*
+
+# Editor directories and files
+ui/.idea
+ui/*.suo
+ui/*.ntvs*
+ui/*.njsproj
+ui/*.sln
+ui/*.sw?
+
+data/out/
+data/sort/*.py[cod]
+
+data/sort/.DS_Store
+
+# C extensions
+data/sort/*.so
+
+# Packages
+data/sort/*.egg
+data/sort/*.egg-info
+data/sort/dist
+data/sort/build
+data/sort/eggs
+data/sort/parts
+data/sort/bin
+data/sort/var
+data/sort/sdist
+data/sort/develop-eggs
+data/sort/.installed.cfg
+data/sort/lib
+data/sort/lib64
+
+# Installer logs
+data/sort/pip-log.txt
+
+# Unit test / coverage reports
+data/sort/.coverage
+data/sort/.tox
+data/sort/nosetests.xml
+
+# Translations
+data/sort/*.mo
+
+# Mr Developer
+data/sort/.mr.developer.cfg
+data/sort/.project
+data/sort/.pydevproject
+
+!data/sort/src/Image-ExifTool/lib
