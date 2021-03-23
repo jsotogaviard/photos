@@ -19,17 +19,17 @@ py -m pip install --upgrade Pillow
 '''
 
 '''
-py  data/compress/compress_images.py data/out/2005-2010 20
-py  data/compress/remove_compressed_images.py data/out/2005-2010 
+py  data/compress/compress_images.py data/out/2012 20
+py  data/compress/remove_compressed_images.py data/out/2012 
 '''
 
 ## To sync from s3 to local computer run:
 '''
-aws s3 sync s3://sotochassaigne1/ data/out
+aws s3 sync s3://sotochassaigne1/ data/out --delete
 '''
 ## To sync from local computer to 3
 '''
-aws s3 sync data/out s3://sotochassaigne1
+aws s3 sync data/out/2005-2010 s3://sotochassaigne1/2005-2010 --delete
 '''
 
 aws s3 sync data/out/2005-2010 s3://sotochassaigne1/2005-2010

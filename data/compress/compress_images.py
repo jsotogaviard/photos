@@ -4,11 +4,12 @@
 compress.py
 """
 
-from PIL import Image
+from PIL import Image, ImageFile
 import PIL
 import os
 import glob
 from sys import argv
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 def compress_images(directory=False, quality=30):
     # 1. If there is a directory then go to it, else perform the next operations inside of the 
@@ -23,11 +24,12 @@ def compress_images(directory=False, quality=30):
     images = [file for file in files if (file.endswith('jpg') and not file.__contains__('quality'))]
 
     # 4. Loop over every image:
+    print(os.getcwd())
     for image in images:
 
         # 5. Open every image:
         img = Image.open(image)
-
+        print('{:4.0f}'.format(os.stat(image).st_size/1000) + "kb :" + image)
         # 5. Compress every image and save it with a new name:
         start = image.split('.')[0]
         end = image.split('.')[1]
