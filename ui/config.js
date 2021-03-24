@@ -5,5 +5,9 @@ module.exports = {
     secretAccessKey: 'yyy', 
     bucket: 'sotochassaigne1',
     url:  "http://sotochassaigne1.s3-website.us-east-2.amazonaws.com/" 
+  },
+  infiniteScroll:{
+    initial: 10,
+    step: 5
   }
 }

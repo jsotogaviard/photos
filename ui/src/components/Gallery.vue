@@ -2,7 +2,6 @@
   <div id="gallery">
     <Albums
       :albums="data.albums"
-      :config="awsConfig"
       :gallery="gallery"
       @onGalleryChanged="onGalleryChanged($event)"
     />
@@ -18,37 +17,6 @@ import Albums from "./Albums.vue";
 
 AWS.config.update(config.s3);
 const s3 = new AWS.S3();
-
-const changeGallery = async (newGallery) => {
-  const result = {
-    albums: [],
-    images: [],
-  };
-
-  const params = {
-    Bucket: config.s3.bucket,
-    Prefix: newGallery,
-    Delimiter: "/",
-  };
-
-  const data = await s3.listObjects(params).promise();
-  for (var i in data.CommonPrefixes) {
-    const name = data.CommonPrefixes[i].Prefix;
-    result.albums.push(name);
-  }
-
-  // Retrieve files
-  for (var j in data.Contents) {
-    const image = data.Contents[j].Key;
-    if (isImage(image)) {
-      const key = getKey(image);
-      if (result.images.indexOf(key) == -1) {
-        result.images.push(key);
-      }
-    }
-  }
-  return result;
-};
 
 export default {
   name: "Gallery",
@@ -68,27 +36,55 @@ export default {
     },
   },
   async mounted() {
-    // List root data
-    this.data = await changeGallery(null);
+    this.data = await this.changeGallery(null);
   },
   methods: {
     async onGalleryChanged(newGallery) {
-      this.data = await changeGallery(newGallery);
-      this.gallery = newGallery
+      this.data = await this.changeGallery(newGallery);
+      this.gallery = newGallery;
+      console.log(this.gallery)
+    },
+    isImage(file) {
+      return (
+        file.endsWith(".jpg") || file.endsWith(".mp4") || file.endsWith(".mov")
+      );
+    },
+    getKey(file) {
+      const name = file.split(".")[0];
+      var key = name.replace("_quality_20", "");
+      key = key.replace("_quality_60", "");
+      return key;
+    },
+    async changeGallery(newGallery) {
+      const result = {
+        albums: [],
+        images: [],
+      };
+
+      const params = {
+        Bucket: config.s3.bucket,
+        Prefix: newGallery,
+        Delimiter: "/",
+      };
+
+      const data = await s3.listObjects(params).promise();
+      for (var i in data.CommonPrefixes) {
+        const name = data.CommonPrefixes[i].Prefix;
+        result.albums.push(name);
+      }
+
+      // Retrieve files
+      for (var j in data.Contents) {
+        const image = data.Contents[j].Key;
+        if (this.isImage(image)) {
+          const key = this.getKey(image);
+          if (result.images.indexOf(key) == -1) {
+            result.images.push(key);
+          }
+        }
+      }
+      return result;
     },
   },
 };
-
-function isImage(file) {
-  return (
-    file.endsWith(".jpg") || file.endsWith(".mp4") || file.endsWith(".mov")
-  );
-}
-
-function getKey(file) {
-  const name = file.split(".")[0];
-  var key = name.replace("_quality_20", "");
-  key = key.replace("_quality_60", "");
-  return key;
-}
 </script>

@@ -23,12 +23,19 @@
 export default {
   name: "Albums",
   props: {
-    albums: Array,
-    gallery: String,
+    albums: {
+      default: function () {
+        return []
+      },
+      type: Array,
+    },
+    gallery: {
+      default:null,
+      type: String,
+    },
   },
   methods: {
     changeGallery(newGallery) {
-      console.log("albums " + this.gallery);
       this.$emit("onGalleryChanged", newGallery);
     },
     up() {
@@ -38,7 +45,7 @@ export default {
         const newGallery = pathArray
           .slice(0, pathArray.length - 1)
           .join("/");
-        this.changeGallery(newGallery);
+        this.changeGallery(newGallery + "/");
       }
     },
   },
@@ -47,16 +54,6 @@ export default {
 
 
 <style>
-.image {
-  width: 100px;
-  height: 100px;
-  background-size: cover;
-  cursor: pointer;
-  margin: 5px;
-  border-radius: 3px;
-  border: 1px solid lightgray;
-  object-fit: contain;
-}
 .folder {
   font-size: 18px;
   color: blue;

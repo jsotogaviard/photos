@@ -48,6 +48,7 @@ npm --prefix ui run serve
 ### Compiles and minifies for production
 ```
 npm --prefix ui run build
+aws s3 sync ui/dist/ s3://sotochassaigne1/
 ```
 
 ### Lints and fixes files
